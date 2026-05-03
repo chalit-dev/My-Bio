@@ -3,20 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio Page</title>
+    <title>Bio Page - JUNIOR</title>
     <link rel="stylesheet" href="bio.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">  
-
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
+<!-- Floating Steampunk Clock -->
+<div class="floating-clock" id="floatingClock">
+    <div class="clock">
+        <div class="gear-bg"></div>
+        <div class="number" style="--rotation: 0deg"><span>XII</span></div>
+        <div class="number" style="--rotation: 30deg"><span>I</span></div>
+        <div class="number" style="--rotation: 60deg"><span>II</span></div>
+        <div class="number" style="--rotation: 90deg"><span>III</span></div>
+        <div class="number" style="--rotation: 120deg"><span>IV</span></div>
+        <div class="number" style="--rotation: 150deg"><span>V</span></div>
+        <div class="number" style="--rotation: 180deg"><span>VI</span></div>
+        <div class="number" style="--rotation: 210deg"><span>VII</span></div>
+        <div class="number" style="--rotation: 240deg"><span>VIII</span></div>
+        <div class="number" style="--rotation: 270deg"><span>IX</span></div>
+        <div class="number" style="--rotation: 300deg"><span>X</span></div>
+        <div class="number" style="--rotation: 330deg"><span>XI</span></div>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center"></div>
+    </div>
+</div>
 
+<!-- Background Clock (subtle) -->
+<div class="background-clock" id="backgroundClock">
+    <div class="clock">
+        <div class="gear-bg"></div>
+        <div class="number" style="--rotation: 0deg"><span>XII</span></div>
+        <div class="number" style="--rotation: 30deg"><span>I</span></div>
+        <div class="number" style="--rotation: 60deg"><span>II</span></div>
+        <div class="number" style="--rotation: 90deg"><span>III</span></div>
+        <div class="number" style="--rotation: 120deg"><span>IV</span></div>
+        <div class="number" style="--rotation: 150deg"><span>V</span></div>
+        <div class="number" style="--rotation: 180deg"><span>VI</span></div>
+        <div class="number" style="--rotation: 210deg"><span>VII</span></div>
+        <div class="number" style="--rotation: 240deg"><span>VIII</span></div>
+        <div class="number" style="--rotation: 270deg"><span>IX</span></div>
+        <div class="number" style="--rotation: 300deg"><span>X</span></div>
+        <div class="number" style="--rotation: 330deg"><span>XI</span></div>
+        <div class="hand hour" id="bgHour"></div>
+        <div class="hand minute" id="bgMinute"></div>
+        <div class="hand second" id="bgSecond"></div>
+        <div class="center"></div>
+    </div>
+</div>
+
+<!-- Edge Gears -->
+<div class="edge-gear left-gear"></div>
+<div class="edge-gear right-gear"></div>
+
+<div class="container">
     <div class="profile">
         <img src="actartsmartdog.jpg" alt="profile">
         <h1>"JUNIOR"</h1>
@@ -26,7 +72,6 @@
     <h2 class="section-title">Social Media</h2>
 
     <div class="link-group">
-
         <a href="https://www.instagram.com/jj_jup1t3r?igsh=cXdjcDR6ZTczd245" class="link-card">
             <i class="fa-brands fa-instagram"></i>
             <span>Instagram</span>
@@ -50,7 +95,6 @@
             <span>GitHub</span>
             <i class="fa-solid fa-ellipsis-vertical"></i>
         </a>
-
     </div>
 
     <div class="contact-info">
@@ -58,12 +102,57 @@
     </div>
 
     <div class="bottom-social">
-        <i class="fa-brands fa-discord"></i>
-        <i class="fa-brands fa-github"></i>
-        <i class="fa-brands fa-instagram"></i>
+        <a href="https://discord.gg/AjSkbR2V"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://github.com/chalit-dev"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.instagram.com/jj_jup1t3r?igsh=cXdjcDR6ZTczd241"><i class="fa-brands fa-instagram"></i></a>
     </div>
-
 </div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        const secondDeg = seconds * 6;
+        const minuteDeg = minutes * 6 + seconds * 0.1;
+        const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+        // Floating Clock
+        document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+        document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+        // Background Clock
+        document.getElementById("bgSecond").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        document.getElementById("bgMinute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+        document.getElementById("bgHour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+    }
+
+    // Scroll detection for floating clock
+    let lastScrollTop = 0;
+    const floatingClock = document.getElementById("floatingClock");
+
+    window.addEventListener("scroll", function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (scrollTop > lastScrollTop) {
+            // Scrolling DOWN
+            floatingClock.style.opacity = "0";
+            floatingClock.style.pointerEvents = "none";
+        } else {
+            // Scrolling UP
+            floatingClock.style.opacity = "1";
+            floatingClock.style.pointerEvents = "auto";
+        }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
 
 </body>
 </html>
